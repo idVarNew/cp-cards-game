@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+$spacing-l: 40px;
+$spacing-m: 20px;
+$font-weight-bold: 600;
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

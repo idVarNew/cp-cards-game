@@ -1,0 +1,41 @@
+@import '../styles.scss';
+
+$msg-color: #ff0000;
+$main-height: 500px;
+$loader-wrapper-height: 300px;
+
+.game {
+  @extend %flex-center;
+  flex-direction: column;
+  margin-top: $spacing-l;
+
+  &-msg {
+    @extend %flex-center;
+    padding: $spacing-m;
+    font-weight: $font-weight-bold;
+    color: $msg-color;
+    padding: $spacing-m $spacing-m $spacing-l;
+  }
+
+  &-header {
+    @extend %flex-center;
+    flex-direction: column;
+  }
+
+  &-main {
+    width: $main-height;
+    margin: $spacing-l;
+  }
+
+  &-loader {
+    @extend %flex-center;
+    height: $loader-wrapper-height;
+  }
+
+  &-counter {
+    @extend %flex-center;
+    margin-bottom: $spacing-m;
+    font-size: 17px;
+    font-weight: $font-weight-bold
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../styles.scss';
+
+.game {
+  &-actions {
+    @extend %flex-center;
+    margin: $spacing-l 0;
+    gap: $spacing-m;
+  }
+}

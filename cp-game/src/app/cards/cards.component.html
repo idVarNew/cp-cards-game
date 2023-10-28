@@ -1,0 +1,22 @@
+<div class="card-wrapper">
+    <mat-card class="card" *ngFor="let person of people" [class.card-winner]="person.winner">
+        <mat-card-header>
+            <mat-card-subtitle *ngIf="person.winner">{{WINNER}}</mat-card-subtitle>
+            <mat-card-title>{{person.name}}</mat-card-title>
+            <mat-card-subtitle>{{currentAttribute}}: {{person[currentAttribute]}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <ul>
+                <li>Height: {{person.height}}</li>
+                <li>Mass: {{person.mass}}</li>
+                <li>Hair color: {{person.hair_color}}</li>
+                <li>Skin color: {{person.skin_color}}</li>
+                <li>Eye color: {{person.eye_color}}</li>
+                <li>Birth year: {{person.birth_year}}</li>
+                <li>Gender: {{person.gender}}</li>
+                <li>Created at: {{person.created | date}}</li>
+                <li>Edited at: {{person.edited | date}}</li>
+            </ul>
+        </mat-card-content>
+    </mat-card>
+</div>

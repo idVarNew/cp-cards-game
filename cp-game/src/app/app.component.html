@@ -1,0 +1,24 @@
+<div class="game">
+    <header class="game-header">
+        <h1 data-cy="title">{{APP_TITLE}}</h1>
+        <span> {{BASED_ON_ATTRIBUTE}}: {{currentAttribute}}.</span>
+    </header>
+
+    <main class="game-main">
+        <div class="game-counter"> {{ counter.user1}} --- {{ counter.user2}} </div>
+        <div class="game-loader" *ngIf="isLoading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+
+        <div class="game-msg" *ngIf="errorMessage"> {{errorMessage}}. {{TRY_AGAIN_MSG}}</div>
+
+        <ng-container *ngIf="people$ | async as people; ">
+            <div class="game-msg" *ngIf="isWinner"> {{NO_WINNER_MSG }}</div>
+            <app-cards [people]="people" [currentAttribute]="currentAttribute"></app-cards>
+        </ng-container>
+
+        <app-actions [PERSON_ATTRIBUTES]="PERSON_ATTRIBUTES" [attributeControl]="attributeControl"
+            (triedAgain)="tryAgain()">
+        </app-actions>
+    </main>
+</div>

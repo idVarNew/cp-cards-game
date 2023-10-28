@@ -1,0 +1,13 @@
+$card-color: #ffc290;
+
+.card {
+  min-width: 50%;
+
+  &-winner {
+    background-color: $card-color;
+  }
+
+  &-wrapper {
+    display: flex;
+  }
+}
