@@ -35,7 +35,10 @@ describe('AppComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
       ],
-      providers: [{ provide: AppApiService, useValue: appApiServiceMock }, { provide: AppService, useValue: appServiceMock }],
+      providers: [
+        { provide: AppApiService, useValue: appApiServiceMock },
+        { provide: AppService, useValue: appServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -46,7 +49,7 @@ describe('AppComponent', () => {
   describe('when ngOnInit is called', () => {
     beforeEach(() => {
       component.attributeControl = new FormControl('mass') as FormControl<PersonAttributes>;
-      spyOn<any>(component, 'getTwoPeople').and.returnValue(of([personMock, personMock]))
+      spyOn<any>(component, 'getTwoPeople').and.returnValue(of([personMock, personMock]));
     });
 
     describe('and there is no error', () => {
@@ -61,7 +64,7 @@ describe('AppComponent', () => {
         expect(component.isLoading).toEqual(false);
       });
       it('then should people$ to equal [personMock, personMock]', () => {
-        component.people$.subscribe(response => {
+        component.people$.subscribe((response) => {
           expect(component['getTwoPeople']).toHaveBeenCalled();
           expect(response).toEqual([personMock, personMock]);
         });
@@ -88,20 +91,19 @@ describe('AppComponent', () => {
           error: (response) => {
             expect(response.error.status).toEqual(404);
             expect(response.error.error.message).toEqual('Not Found');
-          }
+          },
         });
       });
     });
   });
 
   describe('when tryAgain is called', () => {
-    const attributes: PersonAttributes[] = ['mass', "height"];
+    const attributes: PersonAttributes[] = ['mass', 'height'];
 
     beforeEach(() => {
       appApiServiceMock.getPerson.and.returnValues(of(personResultMock), of(personResult1Mock));
-      appServiceMock.getTwoRandomNumber.and.returnValue({ num1: 1, num2: 2 })
+      appServiceMock.getTwoRandomNumber.and.returnValue({ num1: 1, num2: 2 });
       spyOn<any>(component, 'getTwoPeople').and.callThrough();
-
     });
 
     describe('and attribute is the default one', () => {
@@ -124,12 +126,12 @@ describe('AppComponent', () => {
           expect(data[1].winner).toEqual(true);
         });
       });
-    })
+    });
 
     describe('and attribute was changed', () => {
       beforeEach(() => {
         component.currentAttribute = attributes[0];
-        component.attributeControl.setValue(attributes[1])
+        component.attributeControl.setValue(attributes[1]);
         component.tryAgain();
       });
 
@@ -142,6 +144,6 @@ describe('AppComponent', () => {
           expect(data[1].winner).toEqual(true);
         });
       });
-    })
+    });
   });
 });

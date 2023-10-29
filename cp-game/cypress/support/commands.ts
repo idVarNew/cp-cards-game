@@ -1,4 +1,4 @@
-export { };
+export {};
 
 declare global {
   namespace Cypress {
@@ -22,13 +22,14 @@ Cypress.Commands.add('getCyData', (label) => {
 Cypress.Commands.add('visitPage', () => {
   const resultsNumber = 82;
 
-  cy.intercept('https://www.swapi.tech/api/people', { fixture: 'data-people.json' }).as('getPeople');
+  cy.intercept('https://www.swapi.tech/api/people', {
+    fixture: 'data-people.json',
+  }).as('getPeople');
   cy.visit('/');
   cy.contains('CP GAME').should('be.visible');
   cy.wait('@getPeople')
     .its('response.body.total_records')
-    .should('eq', resultsNumber)
-
+    .should('eq', resultsNumber);
 });
 
 Cypress.Commands.add('propertyIsGreater', (element1, element2) => {
@@ -51,14 +52,14 @@ Cypress.Commands.add('tryAgain', () => {
 });
 
 Cypress.Commands.add('counters', (counter1, counter2) => {
-  cy.getCyData('counter-user-1').contains(counter1);
-  cy.getCyData('counter-user-2').contains(counter2);
+  cy.getCyData('game-counter-1').contains(counter1);
+  cy.getCyData('game-counter-2').contains(counter2);
 });
 
 Cypress.Commands.add('getNoWinner', (card) => {
-  cy.getCyData(card).should('not.include.text', WINNER)
+  cy.getCyData(card).should('not.include.text', WINNER);
 });
 
 Cypress.Commands.add('getWinner', (card) => {
-  cy.getCyData(card).should('contain', WINNER)
+  cy.getCyData(card).should('contain', WINNER);
 });

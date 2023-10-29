@@ -8,25 +8,29 @@ import { AppApiService, AppService } from './services';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  TRY_AGAIN_MSG = 'Please try again'
-  NO_WINNER_MSG = 'The winner is undecided - some attributes are unknown.'
-  APP_TITLE = "CP GAME";
-  BASED_ON_ATTRIBUTE = "Winner is based on attribute"
-  PERSON_ATTRIBUTES: PersonAttributes[] = ['height', 'mass']
+  TRY_AGAIN_MSG = 'Please try again';
+  NO_WINNER_MSG = 'The winner is undecided - some attributes are unknown.';
+  APP_TITLE = 'CP GAME';
+  BASED_ON_ATTRIBUTE = 'Winner is based on attribute';
+  PERSON_ATTRIBUTES: PersonAttributes[] = ['height', 'mass'];
 
-  people$: Observable<Person[]>
+  people$: Observable<Person[]>;
   currentAttribute: PersonAttributes = this.PERSON_ATTRIBUTES[0];
-  attributeControl = new FormControl(this.currentAttribute) as FormControl<PersonAttributes>
+  attributeControl = new FormControl(this.currentAttribute) as FormControl<PersonAttributes>;
   isWinner = false;
   isLoading = true;
   totalRecords: number;
-  errorMessage = ''
+  errorMessage = '';
   counter: Counter = { user1: 0, user2: 0 };
 
-  constructor(private appApiService: AppApiService, private appService: AppService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private appApiService: AppApiService,
+    private appService: AppService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.people$ = this.appApiService.getPeople().pipe(
@@ -37,13 +41,14 @@ export class AppComponent implements OnInit {
         return this.getTwoPeople();
       }),
       catchError((error: ErrorMsg) => {
-        this.errorMessage = error.message
+        this.errorMessage = error.message;
         return EMPTY;
       }),
       finalize(() => {
-        this.isLoading = false
-        this.cdr.detectChanges()
-      }))
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      })
+    );
   }
 
   tryAgain(): void {
@@ -53,38 +58,36 @@ export class AppComponent implements OnInit {
   private getTwoPeople(): Observable<Person[]> {
     const randomNumbers = this.appService.getTwoRandomNumber(1, this.totalRecords);
     this.currentAttribute = this.attributeControl.value;
-    this.errorMessage = ''
+    this.errorMessage = '';
     this.isLoading = true;
 
     return forkJoin([
-    /// this.appApiService.getPerson(randomNumbers.num1),
+      this.appApiService.getPerson(randomNumbers.num1),
       this.appApiService.getPerson(randomNumbers.num2),
-     this.appApiService.getPerson(17),
-      //   this.appApiService.getPerson(45)
     ]).pipe(
       map(([response1, response2]) => {
-        const [person1, person2] = [response1.result.properties, response2.result.properties]
+        const [person1, person2] = [response1.result.properties, response2.result.properties];
         this.checkWhoWin(person1, person2, this.currentAttribute);
-        return [person1, person2]
+        return [person1, person2];
       }),
       catchError((error: ErrorMsg) => {
-        this.errorMessage = error.message
+        this.errorMessage = error.message;
         return EMPTY;
       }),
       finalize(() => {
-        this.isLoading = false
+        this.isLoading = false;
       })
-    )
+    );
   }
 
   private checkWhoWin(person1: Person, person2: Person, attr: PersonAttributes): void {
     const attr1 = Number(person1[attr]);
     const attr2 = Number(person2[attr]);
-    const isPersonValue1 = isNaN(attr1)
+    const isPersonValue1 = isNaN(attr1);
     const isPersonValue2 = isNaN(attr2);
     const winnerDoNotExists = attr1 === attr2;
 
-    this.isWinner = isPersonValue1 || isPersonValue2 || winnerDoNotExists
+    this.isWinner = isPersonValue1 || isPersonValue2 || winnerDoNotExists;
 
     if (this.isWinner) return;
 

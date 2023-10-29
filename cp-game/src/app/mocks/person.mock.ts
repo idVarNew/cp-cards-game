@@ -1,4 +1,4 @@
-import { Person } from "../app.models";
+import { Person } from '../app.models';
 
 export const personMock: Person = {
   height: '57',

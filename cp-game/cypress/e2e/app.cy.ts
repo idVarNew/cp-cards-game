@@ -7,13 +7,14 @@ describe('CP game', () => {
   const name3 = 'R2-D2';
   const name4 = 'Beru Whitesun lars';
 
-
   describe('everything working ok', () => {
     beforeEach(() => {
       const responses = testData.data.concat([]);
 
-      cy.intercept('https://www.swapi.tech/api/people/*', (req) => req.reply(responses.shift())).as('getPerson');
-      cy.visitPage()
+      cy.intercept('https://www.swapi.tech/api/people/*', (req) =>
+        req.reply(responses.shift()),
+      ).as('getPerson');
+      cy.visitPage();
 
       cy.wait(['@getPerson', '@getPerson']);
       cy.getCyData('cards').should('be.visible');
@@ -26,7 +27,7 @@ describe('CP game', () => {
       cy.counters(1, 0);
     });
     it('try again', () => {
-      cy.tryAgain()
+      cy.tryAgain();
       cy.getWinner('card-1').and('contain', name4);
       cy.getNoWinner('card-0').and('contain', name3);
       cy.counters(1, 1);
@@ -35,44 +36,50 @@ describe('CP game', () => {
 
     it('change attribute and try again', () => {
       cy.get('mat-select').click().get('mat-option').contains('mass').click();
-      cy.tryAgain()
+      cy.tryAgain();
       cy.getWinner('card-1').and('contain', name4);
       cy.getNoWinner('card-0').and('contain', name3);
       cy.propertyIsGreater('height-property-1', 'height-property-0');
       cy.counters(1, 1);
     });
-  })
+  });
 
   describe('height is unknown', () => {
     beforeEach(() => {
-      const responses = npDataHeight.data.concat([])
+      const responses = npDataHeight.data.concat([]);
 
-      cy.intercept('https://www.swapi.tech/api/people/*', (req) => req.reply(responses.shift())).as('getPerson');
-      cy.visitPage()
+      cy.intercept('https://www.swapi.tech/api/people/*', (req) =>
+        req.reply(responses.shift()),
+      ).as('getPerson');
+      cy.visitPage();
 
       cy.wait(['@getPerson', '@getPerson']);
       cy.getCyData('cards').should('be.visible');
     });
 
     it('one height property is unknown', () => {
-      const warningMsg = 'The winner is undecided - some attributes are unknown.';
+      const warningMsg =
+        'The winner is undecided - some attributes are unknown.';
 
       cy.get('[data-cy="game"]').contains(warningMsg);
-      cy.getNoWinner('card-0').and('contain', name1)
-      cy.getNoWinner('card-1').and('contain', name2)
+      cy.getNoWinner('card-0').and('contain', name1);
+      cy.getNoWinner('card-1').and('contain', name2);
       cy.getCyData('height-property-0')
         .invoke('text')
         .should('match', /^[0-9]*$/);
-      cy.getCyData('height-property-1').invoke('text').should('contain', 'unknown');
+      cy.getCyData('height-property-1')
+        .invoke('text')
+        .should('contain', 'unknown');
       cy.counters(0, 0);
     });
-  })
-
+  });
 
   describe('there are some problems', () => {
     beforeEach(() => {
-      cy.intercept('https://www.swapi.tech/api/people/*', { statusCode: 404 }).as('getPerson');
-      cy.visitPage()
+      cy.intercept('https://www.swapi.tech/api/people/*', {
+        statusCode: 404,
+      }).as('getPerson');
+      cy.visitPage();
     });
 
     it('there is an error 404', () => {
@@ -86,5 +93,5 @@ describe('CP game', () => {
       cy.getCyData('card-1').should('not.exist');
       cy.counters(0, 0);
     });
-  })
+  });
 });

@@ -9,15 +9,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardsComponent } from './cards/cards.component';
 import { ActionsComponent } from './actions/actions.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CardsComponent,
-    ActionsComponent,
-
-  ],
+  declarations: [AppComponent, CardsComponent, ActionsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,9 +21,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCardModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

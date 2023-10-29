@@ -1,10 +1,10 @@
 <div class="game-actions">
-    <mat-form-field>
-        <mat-select data-cy="mat-select"[formControl]="attributeControl">
-            <mat-option *ngFor="let personAttribute of PERSON_ATTRIBUTES" [value]="personAttribute">
-                {{ personAttribute }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button data-cy="try-again" color="accent" mat-stroked-button (click)="tryAgain()">{{TRY_AGAIN}}</button>
+  <mat-form-field>
+    <mat-select data-cy="mat-select" [formControl]="attributeControl">
+      <mat-option *ngFor="let personAttribute of PERSON_ATTRIBUTES" [value]="personAttribute">
+        {{ personAttribute }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button data-cy="try-again" color="accent" mat-stroked-button (click)="tryAgain()">{{ TRY_AGAIN }}</button>
 </div>
