@@ -1,0 +1,33 @@
+<div class="card-wrapper" data-cy="cards">
+  <mat-card
+    class="card"
+    *ngFor="let person of people; index as i"
+    [class.card-winner]="person.winner"
+    [attr.data-cy]="'card-' + i"
+  >
+    <mat-card-header>
+      <mat-card-subtitle data-cy="winner" *ngIf="person.winner">{{ WINNER }}</mat-card-subtitle>
+      <mat-card-title data-cy="person-name">{{ person.name }}</mat-card-title>
+      <mat-card-subtitle data-cy="current-attribute"
+        >{{ currentAttribute }}: {{ person[currentAttribute] }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <ul [attr.data-cy]="'card-properties-' + i">
+        <li>
+          Height: <span [attr.data-cy]="'height-property-' + i">{{ person.height }}</span>
+        </li>
+        <li>
+          Mass: <span [attr.data-cy]="'mass-property-' + i">{{ person.mass }}</span>
+        </li>
+        <li>Hair color: {{ person.hair_color }}</li>
+        <li>Skin color: {{ person.skin_color }}</li>
+        <li>Eye color: {{ person.eye_color }}</li>
+        <li>Birth year: {{ person.birth_year }}</li>
+        <li>Gender: {{ person.gender }}</li>
+        <li>Created at: {{ person.created }}</li>
+        <li>Edited at: {{ person.edited }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

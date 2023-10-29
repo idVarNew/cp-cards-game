@@ -6,20 +6,18 @@ describe('CP game', () => {
   const name2 = 'C-3PO';
   const name3 = 'R2-D2';
   const name4 = 'Beru Whitesun lars';
-  const urlPerson = 'https://www.swapi.tech/api/people/*'
+  const urlPerson = 'https://www.swapi.tech/api/people/*';
 
   describe('everything working ok', () => {
     beforeEach(() => {
       const responses = testData.data.concat([]);
 
-      cy.intercept(urlPerson, (req) =>
-        req.reply(responses.shift()),
-      ).as('getPerson');
+      cy.intercept(urlPerson, (req) => req.reply(responses.shift())).as('getPerson');
       cy.visitPage();
 
       cy.wait(['@getPerson', '@getPerson']);
       cy.getCyData('cards').should('be.visible');
-      cy.checkPropertiesCards()
+      cy.checkPropertiesCards();
     });
 
     it('page were loaded with cards', () => {
@@ -51,9 +49,7 @@ describe('CP game', () => {
     beforeEach(() => {
       const responses = npDataHeight.data.concat([]);
 
-      cy.intercept(urlPerson, (req) =>
-        req.reply(responses.shift()),
-      ).as('getPerson');
+      cy.intercept(urlPerson, (req) => req.reply(responses.shift())).as('getPerson');
       cy.visitPage();
 
       cy.wait(['@getPerson', '@getPerson']);
@@ -61,8 +57,7 @@ describe('CP game', () => {
     });
 
     it('one height property is unknown', () => {
-      const warningMsg =
-        'The winner is undecided - some attributes are unknown.';
+      const warningMsg = 'The winner is undecided - some attributes are unknown.';
 
       cy.get('[data-cy="game"]').contains(warningMsg);
       cy.getNoWinner('card-0').and('contain', name1);
@@ -70,9 +65,7 @@ describe('CP game', () => {
       cy.getCyData('height-property-0')
         .invoke('text')
         .should('match', /^[0-9]*$/);
-      cy.getCyData('height-property-1')
-        .invoke('text')
-        .should('contain', 'unknown');
+      cy.getCyData('height-property-1').invoke('text').should('contain', 'unknown');
       cy.counters(0, 0);
     });
   });
@@ -87,8 +80,8 @@ describe('CP game', () => {
 
     it('there is an error 404', () => {
       cy.wait(['@getPerson', '@getPerson']).then((res) => {
-        expect(res[0]['response'].statusCode).to.equal(404);
-        expect(res[1]['response'].statusCode).to.equal(404);
+        expect(res[0]['response']!.statusCode).to.equal(404);
+        expect(res[1]['response']!.statusCode).to.equal(404);
       });
       cy.get('[data-cy="game-loader"]').should('not.exist');
       cy.get('[data-cy="error-message"]').should('be.visible');

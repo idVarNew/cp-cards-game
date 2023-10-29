@@ -7,7 +7,7 @@ import { People, PersonResult } from '../app.models';
   providedIn: 'root',
 })
 export class AppApiService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getPeople(): Observable<People> {
     return this.httpClient.get<People>(`https://www.swapi.tech/api/people/`);

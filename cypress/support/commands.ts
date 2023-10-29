@@ -1,6 +1,6 @@
-import { Person } from "src/app/app.models";
+import { Person } from 'src/app/app.models';
 
-export { };
+export {};
 
 declare global {
   namespace Cypress {
@@ -31,9 +31,7 @@ Cypress.Commands.add('visitPage', () => {
   }).as('getPeople');
   cy.visit('/');
   cy.contains('CP GAME').should('be.visible');
-  cy.wait('@getPeople')
-    .its('response.body.total_records')
-    .should('eq', resultsNumber);
+  cy.wait('@getPeople').its('response.body.total_records').should('eq', resultsNumber);
 });
 
 Cypress.Commands.add('propertyIsGreater', (element1, element2) => {
@@ -69,9 +67,9 @@ Cypress.Commands.add('getWinner', (card) => {
 });
 
 Cypress.Commands.add('checkPropertiesCards', () => {
-  cy.fixture('data.json').then(results => {
-    cy.checkProperties('card-properties-0', results.data[0].result.properties)
-    cy.checkProperties('card-properties-1', results.data[1].result.properties)
+  cy.fixture('data.json').then((results) => {
+    cy.checkProperties('card-properties-0', results.data[0].result.properties);
+    cy.checkProperties('card-properties-1', results.data[1].result.properties);
   });
 });
 
@@ -85,8 +83,5 @@ Cypress.Commands.add('checkProperties', (card, properties) => {
     .and('contain', properties['skin_color'])
     .and('contain', properties['hair_color'])
     .and('contain', properties['edited'])
-    .and('contain', properties['created'])
+    .and('contain', properties['created']);
 });
-
-
-
