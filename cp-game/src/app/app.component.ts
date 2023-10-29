@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   isWinner = false;
   isLoading = true;
   totalRecords: number;
-  errorMessage: string = ''
+  errorMessage = ''
   counter: Counter = { user1: 0, user2: 0 };
 
   constructor(private appApiService: AppApiService, private appService: AppService, private cdr: ChangeDetectorRef) { }
@@ -57,9 +57,9 @@ export class AppComponent implements OnInit {
     this.isLoading = true;
 
     return forkJoin([
-      this.appApiService.getPerson(randomNumbers.num1),
+    /// this.appApiService.getPerson(randomNumbers.num1),
       this.appApiService.getPerson(randomNumbers.num2),
-      // this.appApiService.getPerson(17),
+     this.appApiService.getPerson(17),
       //   this.appApiService.getPerson(45)
     ]).pipe(
       map(([response1, response2]) => {

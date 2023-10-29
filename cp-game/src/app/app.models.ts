@@ -13,7 +13,7 @@ interface Result {
     url: string;
 }
 
-export interface PersonrResult {
+export interface PersonResult {
     result: {
         properties: Person
     }
