@@ -1,6 +1,6 @@
 <div class="game-actions">
     <mat-form-field>
-        <mat-select [formControl]="attributeControl">
+        <mat-select data-cy="mat-select"[formControl]="attributeControl">
             <mat-option *ngFor="let personAttribute of PERSON_ATTRIBUTES" [value]="personAttribute">
                 {{ personAttribute }}
             </mat-option>

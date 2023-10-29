@@ -1,14 +1,18 @@
-<div class="card-wrapper">
-    <mat-card class="card" *ngFor="let person of people" [class.card-winner]="person.winner">
+<div class="card-wrapper" data-cy="cards">
+    <mat-card class="card" *ngFor="let person of people; index as i" [class.card-winner]="person.winner" [attr.data-cy]="'card-' + i">
         <mat-card-header>
-            <mat-card-subtitle *ngIf="person.winner">{{WINNER}}</mat-card-subtitle>
-            <mat-card-title>{{person.name}}</mat-card-title>
-            <mat-card-subtitle>{{currentAttribute}}: {{person[currentAttribute]}}</mat-card-subtitle>
+            <mat-card-subtitle data-cy="winner" *ngIf="person.winner">{{WINNER}}</mat-card-subtitle>
+            <mat-card-title data-cy="person-name">{{person.name}}</mat-card-title>
+            <mat-card-subtitle data-cy="current-attribute">{{currentAttribute}}: {{person[currentAttribute]}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <ul>
-                <li>Height: {{person.height}}</li>
-                <li>Mass: {{person.mass}}</li>
+                <li>
+                    Height:<span [attr.data-cy]="'height-property-' + i">{{ person.height }}</span>
+                  </li>
+                  <li>
+                    Mass:<span [attr.data-cy]="'mass-property-' + i">{{ person.mass }}</span>
+                  </li>
                 <li>Hair color: {{person.hair_color}}</li>
                 <li>Skin color: {{person.skin_color}}</li>
                 <li>Eye color: {{person.eye_color}}</li>
