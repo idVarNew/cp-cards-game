@@ -1,4 +1,6 @@
-export {};
+import { Person } from "src/app/app.models";
+
+export { };
 
 declare global {
   namespace Cypress {
@@ -10,6 +12,8 @@ declare global {
       counters(counter1: number, counter2: number): Chainable<void>;
       getNoWinner(card: string): Chainable<void>;
       getWinner(card: string): Chainable<void>;
+      checkProperties(card: string, person: Person): Chainable<void>;
+      checkPropertiesCards(): Chainable<void>;
     }
   }
 }
@@ -63,3 +67,26 @@ Cypress.Commands.add('getNoWinner', (card) => {
 Cypress.Commands.add('getWinner', (card) => {
   cy.getCyData(card).should('contain', WINNER);
 });
+
+Cypress.Commands.add('checkPropertiesCards', () => {
+  cy.fixture('data.json').then(results => {
+    cy.checkProperties('card-properties-0', results.data[0].result.properties)
+    cy.checkProperties('card-properties-1', results.data[1].result.properties)
+  });
+});
+
+Cypress.Commands.add('checkProperties', (card, properties) => {
+  cy.getCyData(card)
+    .should('contain', properties['height'])
+    .and('contain', properties['mass'])
+    .and('contain', properties['eye_color'])
+    .and('contain', properties['gender'])
+    .and('contain', properties['birth_year'])
+    .and('contain', properties['skin_color'])
+    .and('contain', properties['hair_color'])
+    .and('contain', properties['edited'])
+    .and('contain', properties['created'])
+});
+
+
+

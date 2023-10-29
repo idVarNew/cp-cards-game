@@ -6,18 +6,20 @@ describe('CP game', () => {
   const name2 = 'C-3PO';
   const name3 = 'R2-D2';
   const name4 = 'Beru Whitesun lars';
+  const urlPerson = 'https://www.swapi.tech/api/people/*'
 
   describe('everything working ok', () => {
     beforeEach(() => {
       const responses = testData.data.concat([]);
 
-      cy.intercept('https://www.swapi.tech/api/people/*', (req) =>
+      cy.intercept(urlPerson, (req) =>
         req.reply(responses.shift()),
       ).as('getPerson');
       cy.visitPage();
 
       cy.wait(['@getPerson', '@getPerson']);
       cy.getCyData('cards').should('be.visible');
+      cy.checkPropertiesCards()
     });
 
     it('page were loaded with cards', () => {
@@ -26,6 +28,7 @@ describe('CP game', () => {
       cy.propertyIsGreater('height-property-0', 'height-property-1');
       cy.counters(1, 0);
     });
+
     it('try again', () => {
       cy.tryAgain();
       cy.getWinner('card-1').and('contain', name4);
@@ -48,7 +51,7 @@ describe('CP game', () => {
     beforeEach(() => {
       const responses = npDataHeight.data.concat([]);
 
-      cy.intercept('https://www.swapi.tech/api/people/*', (req) =>
+      cy.intercept(urlPerson, (req) =>
         req.reply(responses.shift()),
       ).as('getPerson');
       cy.visitPage();
@@ -76,7 +79,7 @@ describe('CP game', () => {
 
   describe('there are some problems', () => {
     beforeEach(() => {
-      cy.intercept('https://www.swapi.tech/api/people/*', {
+      cy.intercept(urlPerson, {
         statusCode: 404,
       }).as('getPerson');
       cy.visitPage();
